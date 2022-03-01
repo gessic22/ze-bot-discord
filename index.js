@@ -14,14 +14,4 @@ const client = new Client({
   ]
 })
 
-client.on('ready', function (){
-  console.log('Bot Logado!')
-})
-
-client.on('messageCreate', function (message){
-  if (message.content === "Geovanio"){
-    message.reply("Chama ele não ele é muito chato!")
-  }
-})
-
 client.login(process.env.BOT_TOKEN)
