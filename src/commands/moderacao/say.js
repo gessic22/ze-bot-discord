@@ -5,8 +5,8 @@ const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require('discord.j
 module.exports = class extends Command {
   constructor(client) {
     super(client, {
-      name: 'falar',
-      description: 'Faz com que o bot diga alguma mensagem',
+      name: 'importante',
+      description: 'Faz com que o bot envie uma mensagem importante!',
       options: [
         {
           name: 'mensagem',
@@ -45,7 +45,7 @@ module.exports = class extends Command {
       ])
 
     const reply = await interaction.reply({
-            content: `*Prévia da sua mensagem*\n${interaction.options.getString('mensagem')}`,
+            content: `**Mensagem Importante!**\n${interaction.options.getString('mensagem')}`,
             components: [actionRow],
             fetchReply: true
     })
@@ -60,7 +60,7 @@ module.exports = class extends Command {
             const texto = interaction.options.getString('mensagem')
 
             const embed = new MessageEmbed()
-                .setTitle(`Aviso importante!`)
+                .setTitle(`Mensagem importante!`)
                 .setDescription(texto)
                 .setColor('#A52A2A')
                 .setTimestamp()

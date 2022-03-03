@@ -3,6 +3,8 @@ const { Client } = require('discord.js')
 const { readdirSync } = require('fs')
 const { join } = require('path')
 
+const mongoose = require('mongoose')
+
 module.exports = class extends Client {
   constructor(options) {
     super(options)
@@ -48,5 +50,13 @@ module.exports = class extends Client {
         console.log(`Comando ${evt.name} carregado!`)
       }
     }
+  }
+
+  async connectToDatabase(){
+    const connection = await mongoose.connect(process.env.MONGO_URL)
+
+    console.log('Database Conectada com sucesso!')
+
+    this.db = { connection }
   }
 }
