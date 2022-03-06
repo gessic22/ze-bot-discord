@@ -8,8 +8,8 @@ module.exports = class extends Command {
     })
   }
 
-  run = (Interaction) => {
-    Interaction.reply({
+  run = (interaction) => {
+    interaction.reply({
       content: `Estou com o ping de \`${this.client.ws.ping}\` milissegundos`,
       ephemeral: true
     })

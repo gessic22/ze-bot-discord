@@ -1,4 +1,5 @@
 module.exports=[
+  //maximo de perguntas 28
   {
     question: 'Qual o seu nome?',
     name:'Nome'

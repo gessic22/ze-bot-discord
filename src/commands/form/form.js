@@ -70,8 +70,7 @@ module.exports = class extends Command {
         } else {
           const msg = await channel.send({ content: interaction.user.toString(), embeds: [embed] })
 
-          const filter = (m) => m.author.id === interaction.user.id && m.content?.length
-
+          const filter = (m) => m.author.id === interaction.user.id && m.content?.length > 0 && m.content?.length < 1058
           const collector = channel.createMessageCollector({ filter, max: 1, time: (2 * 60000) })
 
           const [collected, reason] = await once(collector, 'end')

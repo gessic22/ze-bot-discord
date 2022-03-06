@@ -4,6 +4,7 @@ const { readdirSync } = require('fs')
 const { join } = require('path')
 
 const mongoose = require('mongoose')
+const Models = require('../database/models/Models')
 
 module.exports = class extends Client {
   constructor(options) {
@@ -52,11 +53,11 @@ module.exports = class extends Client {
     }
   }
 
-  async connectToDatabase(){
+  async connectToDatabase() {
     const connection = await mongoose.connect(process.env.MONGO_URL)
 
     console.log('Database Conectada com sucesso!')
 
-    this.db = { connection }
+    this.db = { connection, ...Models }
   }
 }

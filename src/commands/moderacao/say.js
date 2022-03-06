@@ -45,7 +45,7 @@ module.exports = class extends Command {
       ])
 
     const reply = await interaction.reply({
-            content: `*Prévia da mensagem*\n${interaction.options.getString('mensagem')}`,
+            content: 'Escolha o canal onde deseja enviar a mensagem',
             components: [actionRow],
             fetchReply: true
     })
