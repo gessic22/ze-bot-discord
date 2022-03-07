@@ -25,6 +25,7 @@ module.exports = class extends Event {
       )
       .setImage("https://storage.googleapis.com/img-muquest/imgs/discord/pesonagens%20mu.gif")
       .setFooter({text: "Não somos um servidor comum, somos a comunidade Quest.", iconURL: "https://storage.googleapis.com/img-muquest/imgs/discord/iconlogo.png"})
+      .setTimestamp()
 
       welcomeChannel?.send({ embeds: [embed] })
 
