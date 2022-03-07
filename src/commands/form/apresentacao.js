@@ -1,6 +1,6 @@
 const Command = require('../../structures/Command')
 
-const questions = require('../../util/formQuestions')
+const questions = require('../../util/apresentacaoQuestions')
 
 const { once } = require('events')
 const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require('discord.js')
@@ -8,8 +8,8 @@ const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require('discord.j
 module.exports = class extends Command {
   constructor(client) {
     super(client, {
-      name: 'form',
-      description: 'Responder ao formulario.'
+      name: 'apresentacao',
+      description: 'Nos deixe conhecer um pouco sobre você'
     })
   }
 
@@ -20,22 +20,22 @@ module.exports = class extends Command {
       .then(answers => {
 
         const embed = new MessageEmbed()
-            .setTitle('Respostas do formulário:')
-            .setAuthor({ name: interaction.user.tag, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png` })
+            .setTitle('Se apresentou!')
+            .setDescription('Estamos felizes em conhecer você!')
+            .setAuthor({ name: interaction.user.tag })
             .setTimestamp()
+            .setThumbnail(`https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
             .setFooter({text: `ID usuário: ${interaction.user.id}`})
             .setColor('BLUE')
             .addFields(answers)
 
         interaction.channel.send({ embeds: [embed] })
-      })
-      .catch((erro) => {
-        const embed = new MessageEmbed()
-          .setColor('RED')
-          .setDescription(erro)
+      }).then(() =>{
+        interaction.member.roles.add('950218223113089065')
+        interaction.member.roles.remove('950486624440037416') })
 
-        interaction.channel.send({ content: interaction.user.toString(), embeds: [embed] })
-      })
+      .catch(() => {})
+
   async function createForm() {
       const answers = []
       const channel = interaction.channel
@@ -43,7 +43,7 @@ module.exports = class extends Command {
       for (const question of questions) {
         const embed = new MessageEmbed()
           .setTitle(question.question)
-          .setFooter({ text: 'Você tem 3 minutos para responder esta pergunta.' })
+          .setFooter({ text: `Se você não responder em 5 minutos o formulário será cancelado.` })
 
         if (question.options) {
         const actionRow = new MessageActionRow()
@@ -51,8 +51,8 @@ module.exports = class extends Command {
 
         const msg = await channel.send({ content: interaction.user.toString(), embeds: [embed], components: [actionRow] })
 
-        const filter = (i) => i.user.id = interaction.user.id
-        const collector = msg.createMessageComponentCollector({ filter, max: 1, time: (3 * 60000) })
+        const filter = (i) => i.user.id === interaction.user.id
+        const collector = msg.createMessageComponentCollector({ filter, max: 1, time: (5 * 60000) })
 
         const [collected, reason] = await once(collector, 'end')
 
@@ -62,15 +62,17 @@ module.exports = class extends Command {
             name: collected.first().customId,
             value: collected.first().values.join(', ')
           })
-        }
-        else if (reason === 'time') throw ('Tempo esgotado, formulario cancelado!')
-        else throw ('Erro ao executar o formulario! formulario cancelado.')
+        } else {
+          msg.delete().catch(() => {})
+          throw ("Erro")
+          }
 
         } else {
+
           const msg = await channel.send({ content: interaction.user.toString(), embeds: [embed] })
 
           const filter = (m) => m.author.id === interaction.user.id && m.content?.length > 0 && m.content?.length < 1058
-          const collector = channel.createMessageCollector({ filter, max: 1, time: (2 * 60000) })
+          const collector = channel.createMessageCollector({ filter, max: 1, time: (5 * 60000) })
 
           const [collected, reason] = await once(collector, 'end')
 
@@ -80,9 +82,10 @@ module.exports = class extends Command {
               name: question.name,
               value: collected.first().content
             })
+          } else {
+            msg.delete().catch(() => {})
+            throw ("Erro")
           }
-          else if (reason === 'time') throw ('Tempo esgotado, formulario cancelado!')
-          else throw ('Erro ao executar o formulario! formulario cancelado.')
         }
       }
 
