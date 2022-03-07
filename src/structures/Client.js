@@ -6,6 +6,7 @@ const { join } = require('path')
 const mongoose = require('mongoose')
 const Models = require('../database/models/Models')
 
+
 module.exports = class extends Client {
   constructor(options) {
     super(options)
@@ -13,6 +14,7 @@ module.exports = class extends Client {
     this.commands = []
     this.loadComands()
     this.loadEvents()
+    
   }
 
   registryCommands() {
