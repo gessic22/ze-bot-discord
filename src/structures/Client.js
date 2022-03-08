@@ -6,8 +6,8 @@ const { join } = require('path')
 const mongoose = require('mongoose')
 const Models = require('../database/models/Models')
 
-
 module.exports = class extends Client {
+
   constructor(options) {
     super(options)
 
@@ -23,6 +23,7 @@ module.exports = class extends Client {
     //this.application.commands.set(this.commands)
 
   }
+  
 
   loadComands(path = 'src/commands'){
     const categories = readdirSync(path)
