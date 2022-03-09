@@ -51,7 +51,7 @@ module.exports = class extends Command {
 
         const msg = await channel.send({ content: interaction.user.toString(), embeds: [embed], components: [actionRow] })
 
-        const filter = (i) => i.user.id = interaction.user.id
+        const filter = (i) => i.user.id === interaction.user.id
         const collector = msg.createMessageComponentCollector({ filter, max: 1, time: (3 * 60000) })
 
         const [collected, reason] = await once(collector, 'end')

@@ -24,7 +24,6 @@ module.exports = class extends Command {
                   require: true
                 }
               ]
-
             }
           ]
         }

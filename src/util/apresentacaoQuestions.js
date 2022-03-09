@@ -105,7 +105,7 @@ module.exports=[
   {
     question: 'Quais classe de chars do MU você costuma jogar?',
     placeholder: 'Selecione a classe do char',
-    customId: 'No MU eu costumo jogar com',
+    customId: 'Quando jogo MU online eu costumo jogar com',
     minValues: 1,
     maxvalues: 7,
     options:[

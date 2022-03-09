@@ -8,7 +8,6 @@ module.exports = class extends Event {
   }
 
   run = async () => {
-    console.log(this.client)
 
     this.client.user.setPresence({
       status: 'online',

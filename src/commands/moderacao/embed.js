@@ -19,12 +19,6 @@ module.exports = class extends Command {
           type: 'STRING',
           description: 'Escreva a mensagem que será enviada no canal.',
           required: true
-        },
-        {
-          name: 'footer',
-          type: 'STRING',
-          description: 'Escreva a mensagem que ficará no rodapé.',
-          required: true
         }
       ]
     })
@@ -71,14 +65,15 @@ module.exports = class extends Command {
 
             const texto = interaction.options.getString('mensagem')
             const titulo = interaction.options.getString('titulo')
-            const footer = interaction.options.getString('footer')
+            const footer = interaction.member.nickname
+            const url = (`https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
 
             const embed = new MessageEmbed()
                 .setTitle(titulo)
                 .setDescription(texto)
                 .setThumbnail("https://storage.googleapis.com/img-muquest/imgs/discord/iconlogo-vermelho.png")
                 .setColor('#A52A2A')
-                .setFooter({text: `${footer}`, iconURL: "https://storage.googleapis.com/img-muquest/imgs/discord/iconlogo-vermelho.png"})
+                .setFooter({text: `${footer}`, iconURL: `${url}`})
 
             canal.send({ embeds: [embed] })
                 .then(() => interaction.editReply({

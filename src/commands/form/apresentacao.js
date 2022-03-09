@@ -29,7 +29,7 @@ module.exports = class extends Command {
             .setColor('BLUE')
             .addFields(answers)
 
-        interaction.channel.send({ embeds: [embed] })
+        interaction.channel.send({ embeds: [embed]})
       }).then(() =>{
         interaction.member.roles.add('950218223113089065')
         interaction.member.roles.remove('950486624440037416') })
@@ -43,6 +43,7 @@ module.exports = class extends Command {
       for (const question of questions) {
         const embed = new MessageEmbed()
           .setTitle(question.question)
+          .setColor('BLUE')
           .setFooter({ text: `Se você não responder em 5 minutos o formulário será cancelado.` })
 
         if (question.options) {
@@ -69,7 +70,7 @@ module.exports = class extends Command {
 
         } else {
 
-          const msg = await channel.send({ content: interaction.user.toString(), embeds: [embed] })
+          const msg = await channel.send({ content: interaction.user.toString(), embeds: [embed], ephemeral: true})
 
           const filter = (m) => m.author.id === interaction.user.id && m.content?.length > 0 && m.content?.length < 1058
           const collector = channel.createMessageCollector({ filter, max: 1, time: (5 * 60000) })

@@ -1,7 +1,5 @@
 const Event = require('../../structures/Event')
 
-const { MessageButton, MessageActionRow } = require('discord.js')
-
 module.exports = class extends Event {
   constructor(client) {
     super(client, {
